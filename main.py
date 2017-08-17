@@ -27,26 +27,27 @@ for val in x:
 pointmatrix = np.array(pointmatrix).transpose()
 
 #draw a circle
-plt.figure(figsize=(8,8))
+fig, ax = plt.subplots()
+
 plt.plot(pointmatrix[0,], pointmatrix[1,], 'ro')
 
 #stretch the circle
 stretched = stretchMat.dot(pointmatrix)
-plt.plot(stretched[0,], stretched[1,], 'ro', color = 'blue')
+ax.plot(stretched[0,], stretched[1,], 'ro', color = 'blue')
 
 #hang it
 hung = perpframes2.hanger.dot(stretched)
-plt.plot(hung[0,], hung[1,], 'ro', color = 'green')
+ax.plot(hung[0,], hung[1,], 'ro', color = 'green')
 
 #align it
 aligned = perpframes.hanger.dot(stretched)
-plt.plot(aligned[0,], aligned[1,], 'ro', color = 'orange')
+ax.plot(aligned[0,], aligned[1,], 'ro', color = 'orange')
 
 #draw perp frames
 
 #rescale graph to make sure x and y are the same height and width
 
-ax = plt.gca()
+#ax = plt.gca()
 
 lim = 0
 if(max(plt.ylim() > max(plt.xlim()))):
@@ -57,6 +58,7 @@ print("Max is " , lim)
 ax.set_ylim(-1 * lim, lim)
 ax.set_xlim(-1 * lim, lim)
 # recompute the ax.dataLim
-
+ax.set_aspect('equal')
+ax.grid(True, which='both')
 #show the graph
 plt.show()
