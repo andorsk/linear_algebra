@@ -21,6 +21,7 @@ class Helper():
         return (vector / math.sqrt(vetor.dot(vector)))
 
 
+
 class PerpFrames():
     
     def __init__(self, s):
@@ -47,10 +48,14 @@ class PerpFrames():
         
 
 class Stretcher():
+
+    def __init__(self, xstretch = 1, ystretch = 1):
+        self.setXYStretch(xstretch, ystretch)
     
     def setXYStretch(self, xstretch, ystretch):
         self.setXStretch(xstretch)
         self.setYStretch(ystretch)
+        self.mat = self.getStretchMatrix()
         
     def setXStretch(self, xstretch):
         self.checkValid(xstretch)
@@ -72,7 +77,18 @@ class Stretcher():
             
 class ShapeGenerator():
     # 1 = x^2 - y^2 - y^2 = 1 - x^2 y = sqrt(1-x^2)
-    def generateCircle(t, xorigin=0, yorigin=0):
+
+    def generateCircle(xorigin=0, yorigin = 0, radius = 1):
+        x = np.linspace(-1 * math.pi, math.pi, 1000)
+
+        circle = []
+        for val in x:
+            point = ShapeGenerator.circleEq(val, xorigin = xorigin, yorigin = yorigin)
+            circle.append(radius * point)
+            line = np.array(circle).transpose()
+        return np.array(circle).transpose()
+
+    def circleEq(t, xorigin=0, yorigin=0):
         return np.array([math.sin(t) + xorigin , math.cos(t) + yorigin])
     
     def generateWaveForms(t):
